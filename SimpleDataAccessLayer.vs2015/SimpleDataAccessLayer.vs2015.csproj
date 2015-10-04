@@ -51,7 +51,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="ComStreamWrapper.cs" />
     <Compile Include="EditorFactory.cs" />
     <Compile Include="EditorPane.cs" />
     <Compile Include="Guids.cs" />

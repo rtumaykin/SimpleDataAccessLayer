@@ -34,7 +34,11 @@ namespace SimpleDataAccessLayer.vs2015
     /// <para>
     /// To get loaded into VS, the package must be referred by &lt;Asset Type="Microsoft.VisualStudio.VsPackage" ...&gt; in .vsixmanifest file.
     /// </para>
+    /// <para>
+    /// ProvideAutoLoad & Load/save options: http://jbrd.github.io/2007/02/11/visual-studio-2005-sdk-saving-custom-data-in-solution-user-options-suo-files-using-the-managed-package-framework.html
+    /// </para>
     /// </remarks>
+    [ProvideAutoLoad("{f1536ef8-92ec-443c-9ed7-fdadf150da82}")]
     [PackageRegistration(UseManagedResourcesOnly = true)]
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)] // Info on this package for Help/About
     [Guid(GuidList.GuidSimpleDataAccessLayerVs2015PkgString)]
@@ -79,7 +83,7 @@ namespace SimpleDataAccessLayer.vs2015
         protected override void Initialize()
         {
             base.Initialize();
-
+            AddOptionKey(PasswordsUserSection);
             RegisterEditorFactory(new EditorFactory(this));
         }
 
@@ -91,101 +95,36 @@ namespace SimpleDataAccessLayer.vs2015
         {
             return (EnvDTE.DTE) GetService(typeof (EnvDTE.DTE));
         }
-        #endregion
 
-        #region IVsPersistSolutionOpts Members
-
-        int IVsPersistSolutionOpts.LoadUserOptions(IVsSolutionPersistence pPersistence, uint grfLoadOpts)
+        protected override void OnLoadOptions(string key, Stream stream)
         {
-            try
+            if (key == PasswordsUserSection)
             {
-                pPersistence.LoadPackageUserOpts(this, PasswordsUserSection);
-            }
-            finally
-            {
-                Marshal.ReleaseComObject(pPersistence);
-            }
-
-            return VSConstants.S_OK;
-        }
-
-        int IVsPersistSolutionOpts.ReadUserOptions(IStream pOptionsStream, string pszKey)
-        {
-            try
-            {
-                using (StreamEater wrapper = new StreamEater(pOptionsStream))
+                using (var bReader = new BinaryReader(stream))
                 {
-                    if (pszKey == PasswordsUserSection)
+                    var passwordsSerialized = bReader.ReadString();
+                    Passwords.Clear();
+                    foreach (var password in JsonConvert.DeserializeObject<Dictionary<string, string>>(passwordsSerialized))
                     {
-                        LoadOptions(wrapper);
+                        Passwords.Add(password.Key, password.Value);
                     }
                 }
-                return VSConstants.S_OK;
             }
-            finally
-            {
-                Marshal.ReleaseComObject(pOptionsStream);
-            }
+            base.OnLoadOptions(key, stream);
         }
 
-        int IVsPersistSolutionOpts.SaveUserOptions(IVsSolutionPersistence pPersistence)
+        protected override void OnSaveOptions(string key, Stream stream)
         {
-            try
+            if (key == PasswordsUserSection)
             {
-                pPersistence.SavePackageUserOpts(this, PasswordsUserSection);
-            }
-            finally
-            {
-                Marshal.ReleaseComObject(pPersistence);
-            }
+                var passwordsSerialized = JsonConvert.SerializeObject(Passwords);
 
-            return VSConstants.S_OK;
-        }
-
-        int IVsPersistSolutionOpts.WriteUserOptions(IStream pOptionsStream, string pszKey)
-        {
-            try
-            {
-                using (var wrapper = new StreamEater(pOptionsStream))
+                using (var bw = new BinaryWriter(stream))
                 {
-                    if (pszKey == PasswordsUserSection)
-                    {
-                        WriteOptions(wrapper);
-                    }
-                }
-
-                return VSConstants.S_OK;
-            }
-            finally
-            {
-                Marshal.ReleaseComObject(pOptionsStream);
-            }
-        }
-
-        private void WriteOptions(Stream storageStream)
-        {
-            var passwordsSerialized = JsonConvert.SerializeObject(Passwords);
-
-            using (var bw = new BinaryWriter(storageStream))
-            {
-                bw.Write(passwordsSerialized);
-            }
-        }
-
-        private void LoadOptions(Stream storageStream)
-        {
-
-            using (BinaryReader bReader = new BinaryReader(storageStream))
-            {
-                var passwordsSerialized = bReader.ReadString();
-                Passwords.Clear();
-                foreach (var password in JsonConvert.DeserializeObject<Dictionary<string, string>>(passwordsSerialized))
-                {
-                    Passwords.Add(password.Key, password.Value);
+                    bw.Write(passwordsSerialized);
                 }
             }
-
-
+            base.OnSaveOptions(key, stream);
         }
 
         #endregion

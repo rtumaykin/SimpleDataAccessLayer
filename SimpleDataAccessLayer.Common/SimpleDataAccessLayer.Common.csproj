@@ -79,7 +79,6 @@
     <Compile Include="config\models\old\WindowsAuthentication.cs" />
     <Compile Include="config\models\Procedure.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="utilities\Cryptography.cs" />
     <Compile Include="utilities\DalConfigXmlConverter.cs" />
     <Compile Include="wizard\IRefreshOnActivate.cs" />
     <Compile Include="wizard\IUseDalConfig.cs" />
