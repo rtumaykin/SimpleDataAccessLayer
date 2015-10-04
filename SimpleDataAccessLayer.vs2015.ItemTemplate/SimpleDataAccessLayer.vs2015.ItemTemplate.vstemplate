@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VSTemplate Version="3.0.0" Type="Item" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" xmlns:sdk="http://schemas.microsoft.com/developer/vstemplate-sdkextension/2010">
+  <TemplateData>
+    <Name>Simple Data Access Layer</Name>
+    <Description>Simple Data Access Layer C# Project Item</Description>
+    <Icon>SimpleDataAccessLayer.vs2015.ItemTemplate.ico</Icon>
+    <TemplateID>66be3576-45b6-49b3-b25e-f5f322f9b1d6</TemplateID>
+    <ProjectType>CSharp</ProjectType>
+    <ProjectSubType>Database</ProjectSubType>
+    <RequiredFrameworkVersion>4.0</RequiredFrameworkVersion>
+    <NumberOfParentCategoriesToRollUp>1</NumberOfParentCategoriesToRollUp>
+    <DefaultName>DataAccessLayer.dal</DefaultName>
+  </TemplateData>
+  <TemplateContent>
+    <References>
+      <Reference>
+        <Assembly>System</Assembly>
+      </Reference>
+      <Reference>
+        <Assembly>System.Configuration</Assembly>
+      </Reference>
+      <Reference>
+        <Assembly>System.Data</Assembly>
+      </Reference>
+      <Reference>
+        <Assembly>System.Xml</Assembly>
+      </Reference>
+      <Reference>
+        <Assembly>System.Xml.Linq</Assembly>
+      </Reference>
+    </References>
+    <ProjectItem ItemType="Form" ReplaceParameters="true" TargetFileName="$fileinputname$.dal">DataAccessLayer.dal</ProjectItem>
+    <ProjectItem ReplaceParameters="true" TargetFileName="$fileinputname$.dal\$fileinputname$.cs">DataAccessLayer.cs</ProjectItem>
+  </TemplateContent>
+  <!--WizardExtension>
+    <Assembly>SimpleDataAccessLayer.vs2013.ItemTemplate.DeploymentWizard, Version=1.0.0.0, Culture=Neutral, PublicKeyToken=56468f4255e625d5</Assembly>
+    <FullClassName>SimpleDataAccessLayer.vs2013.ItemTemplate.DeploymentWizard.AddItemWizard</FullClassName>
+  </WizardExtension-->
+  <WizardExtension>
+    <Assembly>NuGet.VisualStudio.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</Assembly>
+    <FullClassName>NuGet.VisualStudio.TemplateWizard</FullClassName>
+  </WizardExtension>
+  <WizardData>
+    <packages repository="extension" repositoryId="0072ab57-bce5-4934-8c39-bfbe682d1b88">
+      <package id="Microsoft.SqlServer.Types" version="11.0.2" />
+    </packages>
+  </WizardData>
+</VSTemplate>
