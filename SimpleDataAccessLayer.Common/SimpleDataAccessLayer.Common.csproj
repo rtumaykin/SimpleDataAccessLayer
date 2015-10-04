@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AEF4CC56-3352-4689-BB09-1DDA4124DB69}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SimpleDataAccessLayer.Common</RootNamespace>
+    <AssemblyName>SimpleDataAccessLayer.Common</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>Key.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="codegen\TableTypeColumn.cs" />
+    <Compile Include="codegen\TableType.cs" />
+    <Compile Include="codegen\TableValuedParameter.cs" />
+    <Compile Include="codegen\Tools.cs" />
+    <Compile Include="codegen\SqlRepository.cs" />
+    <Compile Include="codegen\ProcedureResultSetColumn.cs" />
+    <Compile Include="codegen\ProcedureParameter.cs" />
+    <Compile Include="codegen\ProcedureInfo.cs" />
+    <Compile Include="codegen\Procedure.cs" />
+    <Compile Include="codegen\Main.cs" />
+    <Compile Include="codegen\EnumKeyValue.cs" />
+    <Compile Include="codegen\ISqlRepository.cs" />
+    <Compile Include="codegen\Enum.cs" />
+    <Compile Include="codegen\Common.cs" />
+    <Compile Include="config\models\Authentication.cs" />
+    <Compile Include="config\models\AuthenticationType.cs" />
+    <Compile Include="config\models\DalConfig.cs" />
+    <Compile Include="config\models\DesignerConnection.cs" />
+    <Compile Include="config\models\Enum.cs" />
+    <Compile Include="config\models\old\AuthenticationType.cs" />
+    <Compile Include="config\models\old\DalConfig.cs" />
+    <Compile Include="config\models\old\Authentication.cs" />
+    <Compile Include="config\models\old\DesignerConnection.cs" />
+    <Compile Include="config\models\old\Enum.cs" />
+    <Compile Include="config\models\old\Procedure.cs" />
+    <Compile Include="config\models\old\SqlAuthentication.cs" />
+    <Compile Include="config\models\old\WindowsAuthentication.cs" />
+    <Compile Include="config\models\Procedure.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="utilities\DalConfigXmlConverter.cs" />
+    <Compile Include="wizard\IRefreshOnActivate.cs" />
+    <Compile Include="wizard\IUseDalConfig.cs" />
+    <Compile Include="wizard\IValidateInput.cs" />
+    <Compile Include="wizard\MainEditorWindow.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="wizard\MainEditorWindow.Designer.cs">
+      <DependentUpon>MainEditorWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="wizard\Utilities.cs" />
+    <Compile Include="wizard\WizardTabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="wizard\Dashboard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="wizard\Dashboard.Designer.cs">
+      <DependentUpon>Dashboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="wizard\DesignerConnectionTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="wizard\DesignerConnectionTab.Designer.cs">
+      <DependentUpon>DesignerConnectionTab.cs</DependentUpon>
+    </Compile>
+    <Compile Include="wizard\EnumsTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="wizard\EnumsTab.Designer.cs">
+      <DependentUpon>EnumsTab.cs</DependentUpon>
+    </Compile>
+    <Compile Include="wizard\ModelWizard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="wizard\ModelWizard.Designer.cs">
+      <DependentUpon>ModelWizard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="wizard\ProceduresTab.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="wizard\ProceduresTab.Designer.cs">
+      <DependentUpon>ProceduresTab.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Key.pfx" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="wizard\Dashboard.resx">
+      <DependentUpon>Dashboard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wizard\DesignerConnectionTab.resx">
+      <DependentUpon>DesignerConnectionTab.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wizard\EnumsTab.resx">
+      <DependentUpon>EnumsTab.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wizard\MainEditorWindow.resx">
+      <DependentUpon>MainEditorWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wizard\ModelWizard.resx">
+      <DependentUpon>ModelWizard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="wizard\ProceduresTab.resx">
+      <DependentUpon>ProceduresTab.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
