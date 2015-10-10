@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="0072ab57-bce5-4934-8c39-bfbe682d1b88" Version="0.5.7" Language="en-US" Publisher="Roman Tumaykin" />
+    <Identity Id="0072ab57-bce5-4934-8c39-bfbe682d1b88" Version="0.5.8" Language="en-US" Publisher="Roman Tumaykin" />
     <DisplayName>Simple Data Access Layer for Visual Studio 2015</DisplayName>
     <Description xml:space="preserve">Simple Data Access Layer is a Visual Studio extension package that generates enums from the database tables and classes to call stored procedures. </Description>
     <License>License.txt</License>
