@@ -30,8 +30,24 @@ namespace SimpleDataAccessLayer.Common.codegen
             if (tableTypes.Count == 0)
                 return "";
 
-            return string.Join("", tableTypes.Select(tt =>
-                $"namespace {_config.Namespace}.{"TableVariables"}.{Tools.ValidIdentifier(tt.SchemaName)} {{{string.Join("", tableTypes.Where(ttn => ttn.SchemaName == tt.SchemaName).Select(ttn => { var columns = _sqlRepository.GetTableTypeColumns(ttn); return string.Format("public class {0}Row {{{1}}}" + "public class {0} : global::System.Collections.Generic.List<{0}Row> {{public {0} (global::System.Collections.Generic.IEnumerable<{0}Row> collection) : base(collection){{}}internal global::System.Data.DataTable GetDataTable() {{{2}}}}}", Tools.ValidIdentifier(ttn.Name), GetCodeForTableTypeColumns(ttn, columns), GetCodeForDataTableConversion(columns)); }))}}}"));
+            // ReSharper disable once UseStringInterpolation -- it is cleaner this way
+            return string.Join("", tableTypes.Select(tt => tt.SchemaName).Distinct().Select(schema => string.Format("namespace {0}.{1}.{2} {{{3}}}",
+                _config.Namespace,
+                "TableVariables",
+                Tools.ValidIdentifier(schema),
+                string.Join("",
+                    tableTypes.Where(ttn => ttn.SchemaName == schema)
+                        .Select(ttn =>
+                        {
+                            var columns = _sqlRepository.GetTableTypeColumns(ttn);
+                            return string.Format(
+                                "public class {0}Row {{{1}}}" +
+                                "public class {0} : global::System.Collections.Generic.List<{0}Row> {{public {0} (global::System.Collections.Generic.IEnumerable<{0}Row> collection) : base(collection){{}}internal global::System.Data.DataTable GetDataTable() {{{2}}}}}",
+                                Tools.ValidIdentifier(ttn.Name),
+                                GetCodeForTableTypeColumns(ttn, columns),
+                                GetCodeForDataTableConversion(columns));
+                        }))
+                )));
         }
 
         private string GetCodeForDataTableConversion(IList<TableTypeColumn> columns)
