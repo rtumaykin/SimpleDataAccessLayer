@@ -35,10 +35,17 @@ namespace SimpleDataAccessLayer.Common.codegen
 
         public string GetCode()
         {
-            ISqlRepository sqlRepository = new SqlRepository(DesignerConnectionString);
+            try
+            {
+                ISqlRepository sqlRepository = new SqlRepository(DesignerConnectionString);
 
-            return
-                $"{new Common(_config).GetCode()}{new TableValuedParameter(_config, sqlRepository).GetCode()}{new Enum(_config, sqlRepository).GetCode()}{new Procedure(_config, sqlRepository).GetCode()}";
+                return
+                    $"{new Common(_config).GetCode()}{new TableValuedParameter(_config, sqlRepository).GetCode()}{new Enum(_config, sqlRepository).GetCode()}{new Procedure(_config, sqlRepository).GetCode()}";
+            }
+            catch
+            {
+                return "/* Unable to generate code due to empty or invalid configuration */";
+            }
         }
     }
 }

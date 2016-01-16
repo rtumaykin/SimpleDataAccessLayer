@@ -85,7 +85,7 @@ namespace UnitTests
         }
 
         [Test]
-        [Ignore]
+        [Ignore("")]
         [STAThread]
         public void RunVisual()
         {

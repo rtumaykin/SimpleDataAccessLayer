@@ -200,3 +200,4 @@ FakesAssemblies/
 ##Custom
 Except nuget package that should be included with this instance
 !**/[Pp]ackages/[Mm]icrosoft.[Ss]ql[Ss]erver.[Tt]ypes.11.0.2.nupkg
+!**/*.pfx
