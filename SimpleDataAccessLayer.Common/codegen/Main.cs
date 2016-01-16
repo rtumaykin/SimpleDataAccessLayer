@@ -11,12 +11,14 @@ namespace SimpleDataAccessLayer.Common.codegen
     public class Main
 #endif
     {
-        public Main(DalConfig dalConfig)
+        public Main(DalConfig dalConfig, bool supportsAsync)
         {
             _config = dalConfig;
+            _supportsAsync = supportsAsync;
         }
 
         private readonly DalConfig _config;
+        private readonly bool _supportsAsync;
 
 
         private string _designerConnectionString;
@@ -40,7 +42,7 @@ namespace SimpleDataAccessLayer.Common.codegen
                 ISqlRepository sqlRepository = new SqlRepository(DesignerConnectionString);
 
                 return
-                    $"{new Common(_config).GetCode()}{new TableValuedParameter(_config, sqlRepository).GetCode()}{new Enum(_config, sqlRepository).GetCode()}{new Procedure(_config, sqlRepository).GetCode()}";
+                    $"{new Common(_config).GetCode()}{new TableValuedParameter(_config, sqlRepository).GetCode()}{new Enum(_config, sqlRepository).GetCode()}{new Procedure(_config, sqlRepository, _supportsAsync).GetCode()}";
             }
             catch
             {

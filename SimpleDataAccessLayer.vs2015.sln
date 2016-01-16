@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleDataAccessLayer.vs2015.ItemTemplate", "SimpleDataAccessLayer.vs2015.ItemTemplate\SimpleDataAccessLayer.vs2015.ItemTemplate.csproj", "{AE17E472-D471-4CC4-B50B-BCBFCA93D6F7}"
 EndProject
@@ -10,8 +10,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{AC3C6DF0-6E47-41D6-AF1C-14AA8FE0E4F5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleDataAccessLayer.Common", "SimpleDataAccessLayer.Common\SimpleDataAccessLayer.Common.csproj", "{AEF4CC56-3352-4689-BB09-1DDA4124DB69}"
-EndProject
-Project("{FF286327-C783-4F7A-AB73-9BCBAD0D4460}") = "SimpleDataAccessLayer.Common.NugetPackage", "SimpleDataAccessLayer.Common.NugetPackage\SimpleDataAccessLayer.Common.NugetPackage.nuproj", "{E7FB7784-3CE3-433B-B0D8-5D6979C31E1F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +33,6 @@ Global
 		{AEF4CC56-3352-4689-BB09-1DDA4124DB69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEF4CC56-3352-4689-BB09-1DDA4124DB69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AEF4CC56-3352-4689-BB09-1DDA4124DB69}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E7FB7784-3CE3-433B-B0D8-5D6979C31E1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E7FB7784-3CE3-433B-B0D8-5D6979C31E1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E7FB7784-3CE3-433B-B0D8-5D6979C31E1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E7FB7784-3CE3-433B-B0D8-5D6979C31E1F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

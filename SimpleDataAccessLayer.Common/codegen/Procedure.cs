@@ -14,13 +14,15 @@ namespace SimpleDataAccessLayer.Common.codegen
 
         private readonly DalConfig _config;
         private readonly ISqlRepository _sqlRepository;
+        private readonly bool _supportsAsync;
 
-        public Procedure(DalConfig config, ISqlRepository sqlRepository)
+        public Procedure(DalConfig config, ISqlRepository sqlRepository, bool supportsAsync)
         {
             _config = config;
             if (sqlRepository == null)
                 throw new ArgumentNullException(nameof(sqlRepository));
             _sqlRepository = sqlRepository;
+            _supportsAsync = supportsAsync;
         }
 
         public string GetCode()
@@ -54,7 +56,7 @@ namespace SimpleDataAccessLayer.Common.codegen
         private string GetExecuteCode(config.models.Procedure proc, IList<ProcedureParameter> parameters, IList<List<ProcedureResultSetColumn>> recordsets)
         {
             return string.Join("",
-                new[] { true, false }.Select(
+                new[] { _supportsAsync, false }.Distinct().Select(
                     async =>
                         $"public static {(async ? "async global::System.Threading.Tasks.Task<" : "")}{Tools.ValidIdentifier(proc.ProcedureName)}{(async ? ">" : "")} Execute{(async ? "Async" : "")} ({string.Join("", parameters.Select(parameter => $"global::{(parameter.IsTableType ? $"{_config.Namespace}.{parameter.ClrTypeName}" : parameter.ClrTypeName)} {parameter.AsLocalVariableName},"))} global::{_config.Namespace}.ExecutionScope executionScope = null, global::System.Int32 commandTimeout = 30){{{GetExecuteBodyCode(async, parameters, recordsets, proc)}}}/*end*/"));
         }

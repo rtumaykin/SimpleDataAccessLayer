@@ -650,9 +650,13 @@ namespace SimpleDataAccessLayer.vs2015
                         formattingOptions.NewLineAferMethodCallOpenParentheses = NewLinePlacement.SameLine;
                         formattingOptions.NewLineAferMethodDeclarationOpenParentheses = NewLinePlacement.SameLine;
 
+                        // determine if the framework supports async
+                        var project = (uint) codeProjectItem.ContainingProject.Properties.Item("TargetFramework").Value;
+                        var supportsAsync = (project >> 16 > 4) || ((project >> 16 == 4) && (project - ((project >> 16) << 16) >= 5));
+
                         var formattedCode =
                             new CSharpFormatter(FormattingOptionsFactory.CreateAllman()).Format(
-                                new Main(_editorControl.Config).GetCode());
+                                new Main(_editorControl.Config, supportsAsync).GetCode());
 
                         File.WriteAllText(codeFileName, formattedCode);
                     }
