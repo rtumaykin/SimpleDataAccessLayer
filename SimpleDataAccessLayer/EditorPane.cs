@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
-using System.Runtime.Serialization;
 using System.Windows.Forms;
 using EnvDTE;
-using System.Linq;
 using ICSharpCode.NRefactory.CSharp;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.OLE.Interop;
@@ -25,7 +23,7 @@ using SimpleDataAccessLayer.Common.wizard;
 using Formatting = Newtonsoft.Json.Formatting;
 using SelectionContainer = Microsoft.VisualStudio.Shell.SelectionContainer;
 
-namespace SimpleDataAccessLayer.vs2015
+namespace SimpleDataAccessLayer
 {
     /// <summary>
     /// This control host the editor (an extended RichTextBox) and is responsible for

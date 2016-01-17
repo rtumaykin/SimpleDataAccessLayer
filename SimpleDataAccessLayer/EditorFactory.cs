@@ -7,7 +7,7 @@ using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 
-namespace SimpleDataAccessLayer.vs2015
+namespace SimpleDataAccessLayer
 {
     /// <summary>
     /// Factory for creating our editor object. Extends from the IVsEditoryFactory interface

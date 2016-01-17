@@ -1,12 +1,9 @@
 ﻿// Guids.cs
 // MUST match guids.h
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SimpleDataAccessLayer.vs2015
+using System;
+
+namespace SimpleDataAccessLayer
 {
 
     internal static class GuidList
