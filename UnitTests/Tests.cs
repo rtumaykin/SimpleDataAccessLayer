@@ -107,7 +107,7 @@ namespace UnitTests
             viz.ShowDialog();
             if (viz.DialogResult == DialogResult.OK)
             {
-                var code = new Main(config).GetCode();
+                var code = new Main(config, true).GetCode();
             }
         }
 
