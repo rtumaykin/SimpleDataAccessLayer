@@ -14,13 +14,15 @@ namespace SimpleDataAccessLayer.Common.codegen
 
         private readonly DalConfig _config;
         private readonly ISqlRepository _sqlRepository;
+        private readonly bool _supportsAsync;
 
-        public Procedure(DalConfig config, ISqlRepository sqlRepository)
+        public Procedure(DalConfig config, ISqlRepository sqlRepository, bool supportsAsync)
         {
             _config = config;
             if (sqlRepository == null)
                 throw new ArgumentNullException(nameof(sqlRepository));
             _sqlRepository = sqlRepository;
+            _supportsAsync = supportsAsync;
         }
 
         public string GetCode()
@@ -54,9 +56,20 @@ namespace SimpleDataAccessLayer.Common.codegen
         private string GetExecuteCode(config.models.Procedure proc, IList<ProcedureParameter> parameters, IList<List<ProcedureResultSetColumn>> recordsets)
         {
             return string.Join("",
-                new[] { true, false }.Select(
+                new[] { _supportsAsync, false }.Distinct().Select(
                     async =>
-                        $"public static {(async ? "async global::System.Threading.Tasks.Task<" : "")}{Tools.ValidIdentifier(proc.ProcedureName)}{(async ? ">" : "")} Execute{(async ? "Async" : "")} ({string.Join("", parameters.Select(parameter => $"global::{(parameter.IsTableType ? $"{_config.Namespace}.{parameter.ClrTypeName}" : parameter.ClrTypeName)} {parameter.AsLocalVariableName},"))} global::{_config.Namespace}.ExecutionScope executionScope = null, global::System.Int32 commandTimeout = 30){{{GetExecuteBodyCode(async, parameters, recordsets, proc)}}}/*end*/"));
+                        String.Format(
+                            "public static {0}{1}{2} Execute{3} ({4} global::{5}.ExecutionScope executionScope = null, global::System.Int32 commandTimeout = 30){{{6}}}/*end*/",
+                            async ? "async global::System.Threading.Tasks.Task<" : "",
+                            Tools.ValidIdentifier(proc.ProcedureName), async ? ">" : "", async ? "Async" : "",
+                            string.Join("",
+                                parameters.Select(
+                                    parameter =>
+                                        String.Format("global::{0} {1},",
+                                            parameter.IsTableType
+                                                ? $"{_config.Namespace}.{parameter.ClrTypeName}"
+                                                : parameter.ClrTypeName, parameter.AsLocalVariableName))),
+                            _config.Namespace, GetExecuteBodyCode(async, parameters, recordsets, proc))));
         }
 
         private string GetExecuteBodyCode(bool async, IList<ProcedureParameter> parameters, IList<List<ProcedureResultSetColumn>> recordsets, config.models.Procedure proc)
@@ -191,7 +204,26 @@ namespace SimpleDataAccessLayer.Common.codegen
         private string GetParameterCollectionCode(IList<ProcedureParameter> parameters)
         {
             return
-                $"public class ParametersCollection {{{string.Join("", parameters.Select(p => $"public global::{string.Format($"{(p.IsTableType ? _config.Namespace + "." : "")}{p.ClrTypeName}", p.IsTableType ? _config.Namespace + "." : "", p.ClrTypeName)} {p.ParameterName} {{get;private set;}}"))}public ParametersCollection({string.Join(",", parameters.Select(p => $"global::{string.Format($"{(p.IsTableType ? _config.Namespace + "." : "")}{p.ClrTypeName}", p.IsTableType ? _config.Namespace + "." : "", p.ClrTypeName)} {p.AsLocalVariableName}"))}){{{string.Join("", parameters.Select(p => $"this.{p.ParameterName} = {p.AsLocalVariableName};"))}}}}}public ParametersCollection Parameters {{get;private set;}}";
+                String.Format(
+                    "public class ParametersCollection {{{0}public ParametersCollection({1}){{{2}}}}}public ParametersCollection Parameters {{get;private set;}}",
+                    string.Join("",
+                        parameters.Select(
+                            p =>
+                                String.Format("public global::{0} {1} {{get;private set;}}",
+                                    string.Format(
+                                        String.Format("{0}{1}", p.IsTableType ? _config.Namespace + "." : "",
+                                            p.ClrTypeName),
+                                        p.IsTableType ? string.Format("{0}.", _config.Namespace) : "", p.ClrTypeName),
+                                    p.ParameterName))),
+                    string.Join(",",
+                        parameters.Select(
+                            p =>
+                                String.Format("global::{0} {1}",
+                                    string.Format($"{(p.IsTableType ? _config.Namespace + "." : "")}{p.ClrTypeName}",
+                                        p.IsTableType ? _config.Namespace + "." : "", p.ClrTypeName),
+                                    p.AsLocalVariableName))),
+                    string.Join("", parameters.Select(p =>
+                        String.Format("this.{0} = {1};", p.ParameterName, p.AsLocalVariableName))));
         }
     }
 }

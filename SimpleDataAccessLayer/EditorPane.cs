@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
-using System.Runtime.InteropServices;
-using System.Runtime.Serialization;
-using System.Windows.Forms;
-using System.Xml;
-using EnvDTE;
 using System.Linq;
-using EnvDTE80;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
+using EnvDTE;
 using ICSharpCode.NRefactory.CSharp;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.OLE.Interop;
@@ -27,7 +23,7 @@ using SimpleDataAccessLayer.Common.wizard;
 using Formatting = Newtonsoft.Json.Formatting;
 using SelectionContainer = Microsoft.VisualStudio.Shell.SelectionContainer;
 
-namespace SimpleDataAccessLayer.vs2015
+namespace SimpleDataAccessLayer
 {
     /// <summary>
     /// This control host the editor (an extended RichTextBox) and is responsible for
@@ -366,7 +362,7 @@ namespace SimpleDataAccessLayer.vs2015
 
         int IPersist.GetClassID(out Guid pClassId)
         {
-            pClassId = GuidList.GuidSimpleDataAccessLayerVs2015EditorFactory;
+            pClassId = GuidList.GuidSimpleDataAccessLayerEditorFactory;
             return VSConstants.S_OK;
         }
 
@@ -650,9 +646,13 @@ namespace SimpleDataAccessLayer.vs2015
                         formattingOptions.NewLineAferMethodCallOpenParentheses = NewLinePlacement.SameLine;
                         formattingOptions.NewLineAferMethodDeclarationOpenParentheses = NewLinePlacement.SameLine;
 
+                        // determine if the framework supports async
+                        var project = (uint) codeProjectItem.ContainingProject.Properties.Item("TargetFramework").Value;
+                        var supportsAsync = (project >> 16 > 4) || ((project >> 16 == 4) && (project - ((project >> 16) << 16) >= 5));
+
                         var formattedCode =
                             new CSharpFormatter(FormattingOptionsFactory.CreateAllman()).Format(
-                                new Main(_editorControl.Config).GetCode());
+                                new Main(_editorControl.Config, supportsAsync).GetCode());
 
                         File.WriteAllText(codeFileName, formattedCode);
                     }

@@ -22,6 +22,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -31,9 +32,9 @@
     <ProjectGuid>{AE17E472-D471-4CC4-B50B-BCBFCA93D6F7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SimpleDataAccessLayer.vs2015.ItemTemplate</RootNamespace>
-    <AssemblyName>SimpleDataAccessLayer.vs2015.ItemTemplate</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <RootNamespace>SimpleDataAccessLayer.ItemTemplate</RootNamespace>
+    <AssemblyName>SimpleDataAccessLayer.ItemTemplate</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <GeneratePkgDefFile>false</GeneratePkgDefFile>
     <IncludeAssemblyInVSIXContainer>false</IncludeAssemblyInVSIXContainer>
@@ -78,10 +79,10 @@
   <ItemGroup>
     <None Include="DataAccessLayer.cs" />
     <None Include="DataAccessLayer.dal" />
-    <None Include="SimpleDataAccessLayer.vs2015.ItemTemplate.ico" />
+    <None Include="SimpleDataAccessLayer.ItemTemplate.ico" />
   </ItemGroup>
   <ItemGroup>
-    <VSTemplate Include="SimpleDataAccessLayer.vs2015.ItemTemplate.vstemplate">
+    <VSTemplate Include="SimpleDataAccessLayer.ItemTemplate.vstemplate">
       <OutputSubPath>Data</OutputSubPath>
     </VSTemplate>
   </ItemGroup>

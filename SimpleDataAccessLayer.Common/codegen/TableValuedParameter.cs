@@ -25,7 +25,20 @@ namespace SimpleDataAccessLayer.Common.codegen
 
         public string GetCode()
         {
-            var tableTypes = _sqlRepository.GetTableTypes();
+            var allProcedureParams =
+                _config.Procedures.SelectMany(
+                    p => _sqlRepository.GetProcedureParameterCollection(p.Schema, p.ProcedureName))
+                    .Where(pp => pp.IsTableType)
+                    .ToList();
+
+
+            var tableTypes =
+                _sqlRepository.GetTableTypes()
+                    .Where(
+                        tt =>
+                            allProcedureParams.Exists(
+                                app => app.ClrTypeName == $"TableVariables.{tt.SchemaName}.{tt.Name}"))
+                    .ToList();
 
             if (tableTypes.Count == 0)
                 return "";
@@ -79,7 +92,15 @@ namespace SimpleDataAccessLayer.Common.codegen
                     $"public global::{column.ClrTypeName} {Tools.ValidIdentifier(column.ColumnName)} {{ get; private set; }}\r"));
 
             code +=
-                $"public {Tools.ValidIdentifier(tableType.Name)}Row({string.Join(", ", columns.Select(column => $"global::{column.ClrTypeName} {column.ColumnName.Substring(0, 1).ToLower() + column.ColumnName.Substring(1)}"))}) {{{string.Join("\r", columns.Select(column => $"this.{column.ColumnName} = {column.ColumnName.Substring(0, 1).ToLower() + column.ColumnName.Substring(1)};"))}}}\r";
+                String.Format("public {0}Row({1}) {{{2}}}\r", Tools.ValidIdentifier(tableType.Name),
+                    string.Join(", ",
+                        columns.Select(
+                            column =>
+                                $"global::{column.ClrTypeName} {column.ColumnName.Substring(0, 1).ToLower() + column.ColumnName.Substring(1)}")),
+                    string.Join("\r",
+                        columns.Select(
+                            column =>
+                                $"this.{column.ColumnName} = {column.ColumnName.Substring(0, 1).ToLower() + column.ColumnName.Substring(1)};")));
             return code;
         }
     }
