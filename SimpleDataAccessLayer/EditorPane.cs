@@ -362,7 +362,7 @@ namespace SimpleDataAccessLayer
 
         int IPersist.GetClassID(out Guid pClassId)
         {
-            pClassId = GuidList.GuidSimpleDataAccessLayerVs2015EditorFactory;
+            pClassId = GuidList.GuidSimpleDataAccessLayerEditorFactory;
             return VSConstants.S_OK;
         }
 

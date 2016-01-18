@@ -1,6 +1,6 @@
 ﻿//------------------------------------------------------------------------------
-// <copyright file="SimpleDataAccessLayer.vs2015.cs" company="Company">
-//     Copyright (c) Company.  All rights reserved.
+// <copyright file="SimpleDataAccessLayer.cs" company="Roman Tumaykin">
+//     Copyright (c) 2016 Roman Tumaykin.  All rights reserved.
 // </copyright>
 //------------------------------------------------------------------------------
 
@@ -38,14 +38,14 @@ namespace SimpleDataAccessLayer
     [ProvideAutoLoad("{f1536ef8-92ec-443c-9ed7-fdadf150da82}")]
     [PackageRegistration(UseManagedResourcesOnly = true)]
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)] // Info on this package for Help/About
-    [Guid(GuidList.GuidSimpleDataAccessLayerVs2015PkgString)]
+    [Guid(GuidList.GuidSimpleDataAccessLayerPkgString)]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly",
         Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
     [ProvideEditorExtension(typeof(EditorFactory), ".dal", 50,
               ProjectGuid = "{A2FE74E1-B743-11d0-AE1A-00A0C90FFFC3}",
               TemplateDir = "Templates",
               NameResourceID = 105,
-              DefaultName = "SimpleDataAccessLayer.vs2015.Editor")]
+              DefaultName = "SimpleDataAccessLayer.Editor")]
     public sealed class SimpleDataAccessLayerPackage : Package, IVsPersistSolutionOpts
     {
         private Dictionary<string, string> _passwords;

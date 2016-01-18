@@ -12,7 +12,7 @@ namespace SimpleDataAccessLayer
     /// <summary>
     /// Factory for creating our editor object. Extends from the IVsEditoryFactory interface
     /// </summary>
-    [Guid(GuidList.GuidSimpleDataAccessLayerVs2015EditorFactoryString)]
+    [Guid(GuidList.GuidSimpleDataAccessLayerEditorFactoryString)]
     public sealed class EditorFactory : IVsEditorFactory, IDisposable
     {
         private readonly SimpleDataAccessLayerPackage _editorPackage;
@@ -163,7 +163,7 @@ namespace SimpleDataAccessLayer
             // Initialize to null
             ppunkDocView = IntPtr.Zero;
             ppunkDocData = IntPtr.Zero;
-            pguidCmdUi = GuidList.GuidSimpleDataAccessLayerVs2015EditorFactory;
+            pguidCmdUi = GuidList.GuidSimpleDataAccessLayerEditorFactory;
             pgrfCdw = 0;
             pbstrEditorCaption = null;
 
