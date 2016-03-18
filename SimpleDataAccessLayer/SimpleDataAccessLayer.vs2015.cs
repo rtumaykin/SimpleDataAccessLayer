@@ -46,6 +46,7 @@ namespace SimpleDataAccessLayer
               TemplateDir = "Templates",
               NameResourceID = 105,
               DefaultName = "SimpleDataAccessLayer.Editor")]
+    [ProvideEditorFactory(typeof(EditorFactory), 110, TrustLevel = __VSEDITORTRUSTLEVEL.ETL_AlwaysTrusted)]
     public sealed class SimpleDataAccessLayerPackage : Package, IVsPersistSolutionOpts
     {
         private Dictionary<string, string> _passwords;
